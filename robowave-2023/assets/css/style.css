@@ -30,7 +30,7 @@ body {
   color: var(--rawSienna) !important;
 }
 
- {
+.btn-warning {
   background-color: var(--rawSienna) !important;
 }
 .border-warning, .btn-warning {
