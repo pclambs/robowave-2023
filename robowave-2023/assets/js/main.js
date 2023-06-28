@@ -23,7 +23,7 @@ $(document).ready(function() {
 
     // powerglitch
     PowerGlitch.glitch('.glitch', {
-        hideOverflow: true
+        // hideOverflow: true
     })
 
 });
