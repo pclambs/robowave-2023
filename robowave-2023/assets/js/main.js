@@ -26,6 +26,38 @@ $(document).ready(function() {
         // hideOverflow: true
     })
 
+
+    // last error date
+    $('[data-lastErrorDate]').each(function() {
+        // get date from data-lastErrorDate
+        var errDate = $(this).attr('data-lastErrorDate')
+        // turn date into dayjs object
+        errDate = dayjs(errDate)
+        // get todays date as a dayjs object
+        var today = dayjs()
+        // find difference in days between days
+        var diff = today.diff(errDate, 'day')
+        
+        var textClass
+
+        if (diff < 7) {
+            textClass = 'text-danger'
+        } else if (diff < 30) {
+            textClass= 'text-warning'
+        } else {
+            textClass = 'text-success'
+        }
+            // text-danger
+        // diff < 30
+            // text-warning
+        // else 
+            // text-success
+        $(this)
+            .text(diff + " days since last error")
+            .addClass(textClass)
+
+    })
+
 });
 
 
