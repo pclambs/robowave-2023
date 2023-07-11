@@ -47,16 +47,19 @@ $(document).ready(function() {
         } else {
             textClass = 'text-success'
         }
-            // text-danger
-        // diff < 30
-            // text-warning
-        // else 
-            // text-success
+        // update paragraph
         $(this)
             .text(diff + " days since last error")
             .addClass(textClass)
 
     })
+
+    // listen for submit event on signup form
+        // event.preventDefault()
+        // get value out of #email input
+        // create user using the jsonplaceholder API
+            // if successful
+                // redirect to the signup-thankyou.html?email=<email_here>
 
 });
 
