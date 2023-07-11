@@ -54,13 +54,41 @@ $(document).ready(function() {
 
     })
 
+    // signup
+    var submitBtn = document.getElementById('submitBtn')
     // listen for submit event on signup form
-        // event.preventDefault()
+   submitBtn.addEventListener('click', function submitEmail(event) {
+        event.preventDefault()
         // get value out of #email input
-        // create user using the jsonplaceholder API
-            // if successful
-                // redirect to the signup-thankyou.html?email=<email_here>
-
+        var emailInput = document.getElementById('email')
+        var email = emailInput.value.trim()
+        // create user using the jsonplaceholder API POST request jsonplaceholder
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({ email: email })
+        }),
+            .then(function(response) {
+                console.log(response)
+                // if successful
+                if (response.ok && response.status === 201) {
+                    // redirect to the signup-thankyou.html?email=<email_here>
+                    window.location.assign('/signup-thankyou.html?email=' + email)
+                }
+                
+            })
+            .catch(function(error) {
+                alert('Error creating user')
+                throw new Error("Signup failed", error);
+            })
+        })
+    }) 
+    
+    
+    
+    
 });
 
 
