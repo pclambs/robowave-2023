@@ -1,95 +1,84 @@
 $(document).ready(function() {
-    // fullpagejs
+    // fullpage js
     $('#fullpage').fullpage({
-        //options here
-        licenseKey: 'gplv3-license',
-        navigation: true,
-        navigationTooltips: ['Welcome', 'New Robots', 'Used Robots', 'Contact']
+      licenseKey: 'gplv3-license',
+      navigation: true,
+      navigationTooltips: ['Welcome', 'New Robots', 'Used Robots', 'Contact'] 
     });
-    // typewriter
+  
+    // typewriterjs
     var typewriterElements = document.querySelectorAll('.typewriter-effect')
-
     for (var i = 0; i < typewriterElements.length; i++) {
-        var currentEl = typewriterElements[i]
-        var innerText = currentEl.innerText
-       
-        new Typewriter(currentEl, {
-            loop: true,
-        })
+      var currentEl = typewriterElements[i]
+      var innerText = currentEl.innerText
+      new Typewriter(currentEl, {
+        loop: true,
+      })
         .typeString(innerText)
         .pauseFor(1000)
         .start()
     }
-
-    // powerglitch
+  
+    // power glitch
     PowerGlitch.glitch('.glitch', {
-        // hideOverflow: true
+      hideOverflow: true
     })
-
-
+  
     // last error date
     $('[data-lastErrorDate]').each(function() {
-        // get date from data-lastErrorDate
-        var errDate = $(this).attr('data-lastErrorDate')
-        // turn date into dayjs object
-        errDate = dayjs(errDate)
-        // get todays date as a dayjs object
-        var today = dayjs()
-        // find difference in days between days
-        var diff = today.diff(errDate, 'day')
-        
-        var textClass
-
-        if (diff < 7) {
-            textClass = 'text-danger'
-        } else if (diff < 30) {
-            textClass= 'text-warning'
-        } else {
-            textClass = 'text-success'
-        }
-        // update paragraph
-        $(this)
-            .text(diff + " days since last error")
-            .addClass(textClass)
-
+      // get date from data-lastErrorDate
+      var errDate = $(this).attr('data-lastErrorDate')
+      // turn date into dayjs object
+      errDate = dayjs(errDate)
+      // get the today's date as a dayjs object
+      var today = dayjs()
+      // find difference in days between days
+      var diff = today.diff(errDate, 'day')
+      // determine text color class
+      var textClass
+      if (diff < 5) {
+        textClass = 'text-danger'
+      } else if (diff < 30) {
+        textClass = 'text-warning'
+      } else {
+        textClass = 'text-success'
+      }
+      // update paragraph
+      $(this)
+        .text(diff + " days since last error")
+        .addClass(textClass)
     })
-
+  
     // signup
-    var submitBtn = document.getElementById('submitBtn')
-    // listen for submit event on signup form
-   submitBtn.addEventListener('click', function submitEmail(event) {
-        event.preventDefault()
-        // get value out of #email input
-        var emailInput = document.getElementById('email')
-        var email = emailInput.value.trim()
-        // create user using the jsonplaceholder API POST request jsonplaceholder
-        fetch('https://jsonplaceholder.typicode.com/posts', {
-            method: 'POST',
-            headers:{
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({ email: email })
-        }),
-            .then(function(response) {
-                console.log(response)
-                // if successful
-                if (response.ok && response.status === 201) {
-                    // redirect to the signup-thankyou.html?email=<email_here>
-                    window.location.assign('/signup-thankyou.html?email=' + email)
-                }
-                
-            })
-            .catch(function(error) {
-                alert('Error creating user')
-                throw new Error("Signup failed", error);
-            })
+    var signupForm = document.getElementById('signup-form')
+    // listen for submit event on the signup form
+    signupForm.addEventListener('submit', function(event) {
+      event.preventDefault()
+      // get the value out of the #email input
+      var emailInput = document.getElementById('email')
+      var email = emailInput.value.trim()
+      // create a user using the jsonplaceholder API
+      fetch('https://jsonplaceholder.typicode.com/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+      })
+        .then(function(response) {
+          // if successful
+          if (response.ok && response.status === 201) {
+            // redirect to the signup-thankyou.html?email=<email_here>
+            console.log('redirecting...')
+            window.location.assign('./signup-thankyou.html?email=' + email)
+          } else {
+            alert('Something went wrong')
+          }
         })
-    }) 
-    
-    
-    
-    
-});
-
-
-
+        .catch(function(error) {
+          alert('Error creating user')
+          console.log(error)
+        })
+    })
+  
+  });
